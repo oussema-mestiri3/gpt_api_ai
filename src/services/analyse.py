@@ -16,14 +16,14 @@ class TenderAnalyzer:
 
             prompt = self._create_analysis_prompt(text)
 
-            response = openai.ChatCompletion.create(
+            response = openai.chat.completions.create(
                 model="gpt-4-turbo",
                 messages=[{"role": "system", "content": "You are an expert in analyzing tender documents."},
                           {"role": "user", "content": prompt}],
                 max_tokens=4000
             )
 
-            analysis_text = response["choices"][0]["message"]["content"]
+            analysis_text = response.choices[0].message.content
             structured_data = self._parse_analysis(analysis_text)
 
             return {
